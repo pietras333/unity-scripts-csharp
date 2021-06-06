@@ -1,0 +1,62 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+// DONT FORGET TO ADD THIS
+using UnityEngine.UI;
+using System;
+// CUSTOM PACKAGE DOWNLOADED FROM PACKAGE MANGER
+using TMPro;
+
+public class GameEnd : MonoBehaviour
+{
+    // VARIABLES
+    public PlayerMovement playermovement;
+    public Rigidbody rb;
+    public TextMeshProUGUI timer;
+    float currentTime;
+    bool isActive = false;
+    
+
+    // IN START FUNCTION
+    private void Start()
+    {
+        // TIME TO TIMER IS EQUAL TO 0 AND IS ACTIVE LIKE YOU SEE :0
+        currentTime = 0;
+        isActive = true;
+
+    }
+
+    // IN UPDATE FUNCIOTN
+    void Update()
+    {
+        // IF TIMER IS ACTIVE (IN THIS CASE ITS SPEEDRUN TIMER SO ITS ACTIVE WHEN THE SCENE IS LOADED
+        if(isActive)
+            // WE START OUR TIMER MULTIPLAYING IT WITH Time.deltaTime
+            currentTime = currentTime + Time.deltaTime;
+        // HERE WE JUST SET IT TO TEXT THAT SHOW UP ON SCREEN    
+        TimeSpan time = TimeSpan.FromSeconds(currentTime);
+        timer.text = time.ToString(@"mm\:ss\:ff");
+         
+
+    }
+
+
+  
+    private void OnCollisionEnter(Collision collision)
+    {
+        // IF PLAYER COLLIDES WITH GAMEOBJECT THAT HAVE "Finish" TAG
+        if (collision.collider.CompareTag("Finish"))
+        {
+            // WE TURN OFF TIMER
+            isActive = false;
+            // AND WE SET THE FINISH TIME TO TEXT
+            string finishTime = currentTime.ToString();
+            timer.text = finishTime;
+            
+            // FOR MY GAME I DISABLED PLAYER MOVEMENT SCRIPT SO PLAYER CANT MOVE AFTER FINISH
+            playermovement.enabled = false;
+            // THIS WAS ONLY FOR TESTING IT SHOWS IN CONSOLE THAT WE FINISHED MAP
+            Debug.Log("YOU'VE FINISHED THE MAP");
+        }
+    }
+}
