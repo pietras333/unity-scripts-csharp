@@ -9,20 +9,14 @@ public class MenuManager : MonoBehaviour
    public GameObject MainMenu;
    public GameObject OptionsMenu;
    public TextMeshProUGUI buttonBackText;
-
    bool isInOptions = false;
-
-
 
    public void Play(){
       SceneManager.LoadScene("Lobby");
-
    }
 
    public void Options(){
       isInOptions = true;
-      
-
    }
 
    public void QuitOrBack(){
@@ -33,9 +27,6 @@ public class MenuManager : MonoBehaviour
       }else if(!isInOptions){
          Application.Quit();
       }
-         
-      
-      
    }
 
    public void Update(){
@@ -46,8 +37,5 @@ public class MenuManager : MonoBehaviour
       }else if(!isInOptions){
          buttonBackText.text = "quit";
       }
-
    }
-
-  
 }
