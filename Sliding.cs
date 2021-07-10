@@ -7,7 +7,16 @@ public class Slide : MonoBehaviour
   // this is only for RigidBody based movement that's using movementMultilpier float to move
   float slideScale
 
- 
+ void Update(){
+  slideForce = 2 * rb.velocity.magnitude;
+  
+  if(isGrounded && Input.GetKeyDown(KeyCode.C)){
+    StartSliding();
+  }
+  if(isSliding && rb.velocity.magnitude < 2f || Input.GetKeyUp(KeyCode.C)){
+    StopSliding();
+  }
+}
  void StartSliding(){
       isSliding = true;
       movementMultiplier = 0f;
