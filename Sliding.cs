@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Slide : MonoBehaviour
 {
+ transfrom cameraTransform;
  // this is only for RigidBody based movement that's using movementMultilpier float to move
  void Update(){
  slideForce = 2 * rb.velocity.magnitude;
