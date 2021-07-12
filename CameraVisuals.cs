@@ -7,7 +7,7 @@ using UnityEngine.Rendering.PostProcessing;
 
 public class CameraVisuals : MonoBehaviour
 {
-    // U WILL NEED EZCameraShake asset for this available on GitHub and rigidbody based movement
+    // U will need EZCameraShake asset for this available on GitHub and rigidbody based movement
     [SerializeField] Rigidbody rigidbody;
     [SerializeField] float actualSpeed;
     [SerializeField] PostProcessProfile postProcessProfile;
