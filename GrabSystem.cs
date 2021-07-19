@@ -12,10 +12,17 @@ public class PlayerGrab : MonoBehaviour
   private Rigidbody grabbedObjectRB;
   public GameObject grabbedObject;
   private float grabRange = 5f;
-  private float dropForce = 5f;
+  private float dropForce;
   private BoxCollider grabbedObjectCollider;
+  private ThrowTeleport throwTeleportRef;
+  public float throwForce = 50f;
 
   public void Update(){
+    dropForce = playerRB.velocity.magnitude;
+    if(isHolding && Input.GetMouseButtonDown(0)){
+      Throw();
+      isHolding = false;
+    }
     // WHEN PRESSED E
     if(Input.GetKeyDown("e") && !isHolding){
       CheckItem();
@@ -33,19 +40,6 @@ public class PlayerGrab : MonoBehaviour
       Drop();
       isHolding = false;
     }
-
-    if(isHolding){
-      grapplingGunRef.enabled = true;
-      rotateGunRef.enabled = true;
-    }else{
-      grapplingGunRef.enabled = false;
-      rotateGunRef.enabled = false;
-    }
-
-   
-
-
-
   }
 
   public void PickUp(){
@@ -57,6 +51,26 @@ public class PlayerGrab : MonoBehaviour
     grabbedObjectRB.isKinematic = true;  
     grabbedObjectCollider = grabbedObject.GetComponent<BoxCollider>();
     grabbedObjectCollider.enabled = false;
+  }
+  
+  public void Throw(){
+   if(grabbedObject.GetComponent<ThrowTeleport>()){
+    throwTeleportRef = grabbedObject.GetComponent<ThrowTeleport>();
+    grabbedObjectRB.isKinematic = false;
+    grabbedObjectRB.useGravity = true;
+    grabbedObject.transform.SetParent(null);
+    grabbedObjectCollider = grabbedObject.GetComponent<BoxCollider>();
+    grabbedObjectCollider.enabled = true;
+    grabbedObjectRB.AddForce(camera.forward * throwForce, ForceMode.Impulse);
+    throwTeleportRef.doTeleport = true;
+   }else{
+    grabbedObjectRB.isKinematic = false;
+    grabbedObjectRB.useGravity = true;
+    grabbedObject.transform.SetParent(null);
+    grabbedObjectCollider = grabbedObject.GetComponent<BoxCollider>();
+    grabbedObjectCollider.enabled = true;
+    grabbedObjectRB.AddForce(camera.forward * throwForce, ForceMode.Impulse);
+   }
   }
 
   public void Drop(){
@@ -74,5 +88,4 @@ public class PlayerGrab : MonoBehaviour
       grabbedObject = hit.transform.gameObject;      
     }
   }
-
 }
