@@ -4,14 +4,22 @@ using UnityEngine;
 
 public class ThrowTeleport : MonoBehaviour
 {
-    // with simple grab/drop system u can use this for ender pearl like effect just after throw set doTeleport to true 
     public GameObject player;
     [HideInInspector] public bool doTeleport = false;
+    [SerializeField] int minYlevel;
+    private Vector3 objectPosition;
     private GameObject thisGameObject;
     private Vector3 teleportPosition;
-
+    
     public void Start(){
-        thisGameObject = this.gameObject;
+      thisGameObject = this.gameObject;
+      objectPosition = new Vector3(thisGameObject.transform.position.x, thisGameObject.transform.position.y, thisGameObject.transform.position.z);
+    }
+    public void Update(){
+      if(thisGameObject.transform.position.y < minYlevel && minYlevel != 0){
+        doTeleport = false;
+        thisGameObject.transform.position = objectPosition;
+      }
     }
     public void OnCollisionEnter(Collision collider){
       if(doTeleport){
