@@ -4,14 +4,18 @@ using UnityEngine;
 
 public class JumpPlate : MonoBehaviour
 {
-   // Simple object that throws you up if youre using rigidbody based movement ofc
    private Rigidbody playerRB;
+   private GameObject thisGameObject;
    [SerializeField] float upForce = 15f;
    
-   private void OnCollisionEnter(Collision collider){
+   private void Start(){
+       thisGameObject = this.gameObject;
+   }
+
+    private void OnCollisionEnter(Collision collider){
        if(collider.gameObject.CompareTag("Player")){
            playerRB = collider.gameObject.GetComponent<Rigidbody>();
-           playerRB.AddForce(Vector3.up * upForce, ForceMode.Impulse);
+           playerRB.AddForce(thisGameObject.transform.up * upForce, ForceMode.Impulse);
        }else
        {
            return;
