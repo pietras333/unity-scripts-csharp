@@ -19,6 +19,7 @@ public class Grenade : MonoBehaviour
     }
     public void Update(){
         if(thisGameObject.transform.position.y < minYLevel){
+          doExplode = false;
           thisGameObject.transform.position = objectPosition;
         }
     }
